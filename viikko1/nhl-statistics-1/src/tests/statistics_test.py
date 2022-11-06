@@ -1,16 +1,8 @@
 import unittest
 from statistics import Statistics
-from player import Player
+from statistics import SortBy
+from player_reader import PlayerReaderStub
 
-class PlayerReaderStub:
-    def get_players(self):
-        return [
-            Player("Semenko", "EDM", 4, 12),
-            Player("Lemieux", "PIT", 45, 54),
-            Player("Kurri",   "EDM", 37, 53),
-            Player("Yzerman", "DET", 42, 56),
-            Player("Gretzky", "EDM", 35, 89)
-        ]
 
 class TestStatistics(unittest.TestCase):
     def setUp(self):
@@ -31,7 +23,8 @@ class TestStatistics(unittest.TestCase):
     def test_hae_parhaat(self):
         self.assertEqual(str(self.statistics.top(1)[0]), "Gretzky EDM 35 + 89 = 124")
 
-    #def test_palauta_pisteet(self):
-    #    self.assertAlmostEqual(sort_by_points(self._players[2]), 90)
+    def test_hae_parhaat_maalit(self):
+        self.assertEqual(str(self.statistics.top(1, SortBy.GOALS)[0]), "Lemieux PIT 45 + 54 = 99")
 
-    
+    def test_hae_parhaat_syotot(self):
+        self.assertEqual(str(self.statistics.top(1, SortBy.ASSISTS)[0]), "Gretzky EDM 35 + 89 = 124")

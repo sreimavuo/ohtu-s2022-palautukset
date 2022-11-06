@@ -1,28 +1,24 @@
 from statistics import Statistics
+from statistics import SortBy
 from player_reader import PlayerReader
 from player_reader import PlayerReaderStub
 
 def main():
     #stats = Statistics()
     stats = Statistics(
-        PlayerReaderStub()
+        PlayerReader()
     )
-    #philadelphia_flyers_players = stats.team("PHI")
-    penguins_players = stats.team("PIT")
+    philadelphia_flyers_players = stats.team("PHI")
 
-    #top_scorers = stats.top(10)
-    top_scorers = stats.top(3)
+    top_goal_makers = stats.top(10, SortBy.GOALS)
+    #top_scorers = stats.top(3, SortBy.ASSISTS)
 
-    #print("Philadelphia Flyers:")
-    #for player in philadelphia_flyers_players:
-    #    print(player)
-
-    print("Pittsburgh Penguins:")
-    for player in penguins_players:
+    print("Philadelphia Flyers:")
+    for player in philadelphia_flyers_players:
         print(player)
 
-    print("Top point getters:")
-    for player in top_scorers:
+    print("Top goal makers:")
+    for player in top_goal_makers:
         print(player)
 
     print("Search for Kurri:")
