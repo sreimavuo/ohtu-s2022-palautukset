@@ -1,10 +1,27 @@
+# Python virtual environment for Poetry project
 **/.venv
+
+# VSCode settings
 *.code-workspace
 .vscode
+
+# macOS stuff
 .DS_Store
+
+# Coverage reports and configs
 .coverage
-.pytest_cache
 htmlcov
+
+# PyTest cache files
+.pytest_cache
+
+# Python cache files
 __pycache__
 *.py[cod]
 *$py.class
+
+# Robot Framework
+output.xml
+report.html
+log.html
+
