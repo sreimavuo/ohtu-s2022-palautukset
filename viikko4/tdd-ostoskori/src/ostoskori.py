@@ -28,7 +28,16 @@ class Ostoskori:
 
     """ Lisää tuotteen. """
     def lisaa_tuote(self, lisattava: Tuote):
-        self.ostoslista.append(Ostos(lisattava))
+
+        indeksi = -1
+        for i in range(0, len(self.ostoslista)):
+            if self.ostoslista[i].tuotteen_nimi() is lisattava.nimi():
+                indeksi = i
+
+        if indeksi == -1:
+            self.ostoslista.append(Ostos(lisattava))
+        else:
+            self.ostoslista[indeksi].muuta_lukumaaraa(1)
 
     """ Poistaa tuotteen. """
     def poista_tuote(self, poistettava: Tuote):
