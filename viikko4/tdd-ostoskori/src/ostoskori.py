@@ -28,20 +28,17 @@ class Ostoskori:
 
     """ Lisää tuotteen. """
     def lisaa_tuote(self, lisattava: Tuote):
-
-        indeksi = -1
-        for i in range(0, len(self.ostoslista)):
-            if self.ostoslista[i].tuotteen_nimi() is lisattava.nimi():
-                indeksi = i
-
-        if indeksi == -1:
-            self.ostoslista.append(Ostos(lisattava))
+        if self.__onko_tuote_jo_korissa(lisattava):
+            self.ostoslista[self.__tuotteen_indeksi(lisattava)].muuta_lukumaaraa(1)
         else:
-            self.ostoslista[indeksi].muuta_lukumaaraa(1)
+            self.ostoslista.append(Ostos(lisattava))
 
     """ Poistaa tuotteen. """
     def poista_tuote(self, poistettava: Tuote):
-        pass
+        if self.__onko_viimeinen_tuote_korissa(poistettava):
+            self.ostoslista.pop(self.__tuotteen_indeksi(poistettava))
+        else:
+            self.ostoslista[self.__tuotteen_indeksi(poistettava)].muuta_lukumaaraa(-1)
 
     """ Tyhjentää ostoskorin. """
     def tyhjenna(self):
@@ -51,3 +48,24 @@ class Ostoskori:
     """ Kukin ostos-olio siis kertoo mistä tuotteesta on kyse JA kuinka monta kappaletta kyseistä tuotetta korissa on. """
     def ostokset(self):
         return self.ostoslista
+
+    """ Jos ostos löytyy ostoskorista, palauttaa indeksin, muuten palauttaa -1. """
+    def __tuotteen_indeksi(self, lisattava: Tuote):
+        indeksi = -1
+        for i in range(0, len(self.ostoslista)):
+            if self.ostoslista[i].tuotteen_nimi() is lisattava.nimi():
+                indeksi = i
+
+        return indeksi
+
+    """ Tarkistaa löytyykö tuote jo ostoskorista. """
+    def __onko_tuote_jo_korissa(self, lisattava: Tuote):
+        for ostos in self.ostoslista:
+            if ostos.tuotteen_nimi() is lisattava.nimi():
+                return True
+        
+        return False
+
+    """ Tarkistaa onko tuotetta vain 1kpl ostoskorissa. """
+    def __onko_viimeinen_tuote_korissa(self, poistettava: Tuote):
+        return False
