@@ -28,7 +28,7 @@ class Ostoskori:
 
     """ Lisää tuotteen. """
     def lisaa_tuote(self, lisattava: Tuote):
-        if self.__onko_tuote_jo_korissa(lisattava):
+        if self.__onko_tuote_korissa(lisattava):
             self.ostoslista[self.__tuotteen_indeksi(lisattava)].muuta_lukumaaraa(1)
         else:
             self.ostoslista.append(Ostos(lisattava))
@@ -59,7 +59,7 @@ class Ostoskori:
         return indeksi
 
     """ Tarkistaa löytyykö tuote jo ostoskorista. """
-    def __onko_tuote_jo_korissa(self, lisattava: Tuote):
+    def __onko_tuote_korissa(self, lisattava: Tuote):
         for ostos in self.ostoslista:
             if ostos.tuotteen_nimi() is lisattava.nimi():
                 return True
@@ -68,4 +68,8 @@ class Ostoskori:
 
     """ Tarkistaa onko tuotetta vain 1kpl ostoskorissa. """
     def __onko_viimeinen_tuote_korissa(self, poistettava: Tuote):
-        return False
+        if self.__onko_tuote_korissa(poistettava):
+            if self.ostoslista[self.__tuotteen_indeksi(poistettava)].lukumaara() == 1:
+                return True
+            else:
+                return False
