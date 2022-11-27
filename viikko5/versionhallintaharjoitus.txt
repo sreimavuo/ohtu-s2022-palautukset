@@ -1,0 +1,2 @@
+Harjoitellaan tuhotun tiedoston palautusta.
+
