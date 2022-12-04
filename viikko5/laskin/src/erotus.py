@@ -5,4 +5,10 @@ class Erotus:
 
     def suorita(self):
         syote = int(self.lue_syote())
+        self.sovellus.edellinen = self.sovellus.tulos
         self.sovellus.tulos = self.sovellus.tulos - syote
+
+    def kumoa(self):
+        tmp = self.sovellus.edellinen
+        self.sovellus.edellinen = self.sovellus.tulos
+        self.sovellus.tulos = tmp

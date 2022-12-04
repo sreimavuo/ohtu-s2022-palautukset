@@ -4,7 +4,6 @@ from tkinter import ttk, constants, StringVar
 from summa import Summa
 from erotus import Erotus
 from nollaus import Nollaus
-from kumoa import Kumoa
 
 
 class Komento(Enum):
@@ -19,13 +18,14 @@ class Kayttoliittyma:
         self._sovellus = sovellus
         self._root = root
         self._syote_kentta = None
+        self._edellinen_komento_olio = None
 
         self._komennot = {
             Komento.SUMMA: Summa(sovellus, self._lue_syote),
             Komento.EROTUS: Erotus(sovellus, self._lue_syote),
             Komento.NOLLAUS: Nollaus(sovellus),
-            Komento.KUMOA: Kumoa(sovellus, self._lue_syote)
         }
+        self._edellinen_komento_olio = Komento.KUMOA
 
     def kaynnista(self):
         self._tulos_var = StringVar()
@@ -57,7 +57,7 @@ class Kayttoliittyma:
             master=self._root,
             text="Kumoa",
             state=constants.DISABLED,
-            command=lambda: self._suorita_komento(Komento.KUMOA)
+            command=lambda: self._kumoa_komento()
         )
 
         tulos_teksti.grid(columnspan=4)
@@ -70,9 +70,23 @@ class Kayttoliittyma:
     def _lue_syote(self):
         return self._syote_kentta.get()
 
+    def _kumoa_komento(self):
+        self._edellinen_komento_olio.kumoa()
+
+        self._kumoa_painike["state"] = constants.NORMAL
+
+        if self._sovellus.tulos == 0:
+            self._nollaus_painike["state"] = constants.DISABLED
+        else:
+            self._nollaus_painike["state"] = constants.NORMAL
+
+        self._syote_kentta.delete(0, constants.END)
+        self._tulos_var.set(self._sovellus.tulos)
+
     def _suorita_komento(self, komento):
         komento_olio = self._komennot[komento]
         komento_olio.suorita()
+        self._edellinen_komento_olio = komento_olio
 
         self._kumoa_painike["state"] = constants.NORMAL
 
