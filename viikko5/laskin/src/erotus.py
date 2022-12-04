@@ -1,7 +1,8 @@
 class Erotus:
-    def __init__(self, sovellus, lue_syote=0):
+    def __init__(self, sovellus, lue_syote):
         self.sovellus = sovellus
-        self.syote = lue_syote()
+        self.lue_syote = lue_syote
 
     def suorita(self):
-        self.sovellus.tulos = self.sovellus.tulos - self.syote
+        syote = int(self.lue_syote())
+        self.sovellus.tulos = self.sovellus.tulos - syote

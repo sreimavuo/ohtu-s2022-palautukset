@@ -1,5 +1,5 @@
 class Nollaus:
-    def __init__(self, sovellus, lue_syote=0):
+    def __init__(self, sovellus):
         self.sovellus = sovellus
 
     def suorita(self):
